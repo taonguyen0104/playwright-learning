@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
 import { Product } from "../models/Product";
 import { BasePage } from "./BasePage";
 
@@ -8,14 +8,21 @@ export class CartPage extends BasePage{
     private readonly productPrice: Locator;
     private readonly productQuantity: Locator;  
     private readonly checkoutButton: Locator;
+    private readonly pageTitle: Locator;
 
     constructor(page: Page) {
         super(page);
+        this.pageTitle = page.locator('[data-test="title"]');
         this.cartItems = page.locator('[data-test="inventory-item"]');
         this.productName = page.locator('[data-test="inventory-item-name"]');
         this.productPrice = page.locator('[data-test="inventory-item-price"]');
         this.productQuantity = page.locator('[data-test="item-quantity"]');
         this.checkoutButton = page.getByRole('button', { name: 'Checkout' });
+    }
+    
+    async verifyPageLoaded() {
+        await expect(this.page).toHaveURL(/cart/);
+        await expect(this.pageTitle).toHaveText('Your Cart');
     }
 
     getCartItemsCount(): Promise<number> {
@@ -41,4 +48,5 @@ export class CartPage extends BasePage{
         await this.click(this.checkoutButton);
         await this.waitForUrl(/checkout-step-one/);
     }
+
 }

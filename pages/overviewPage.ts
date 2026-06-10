@@ -5,11 +5,20 @@ import { BasePage } from "./BasePage";
 export class OverviewPage extends BasePage {
     private readonly ProductItems: Locator;
     private readonly finishButton: Locator;  
+    private readonly completeHeader: Locator;
+    private readonly pageTitle: Locator;
 
     constructor(page: Page) {
         super(page);
         this.ProductItems = page.locator('[data-test="inventory-item"]');
         this.finishButton = page.getByRole('button', { name: 'Finish' });
+        this.completeHeader = page.getByRole('heading', { name: 'Thank you for your order!' });
+        this.pageTitle = page.locator('[data-test="title"]');
+    }
+
+    async verifyPageLoaded() {
+        await expect(this.page).toHaveURL(/checkout-step-two/);
+        await expect(this.pageTitle).toHaveText('Checkout: Overview');
     }
 
     async getProductItemsCount(): Promise<number> {
@@ -34,7 +43,12 @@ export class OverviewPage extends BasePage {
      async finishOrder() {
         await expect(this.finishButton).toBeVisible();
         await expect(this.finishButton).toBeEnabled();
-        await this.finishButton.click();
+        await this.click(this.finishButton);
+    }
+
+    async verifyOrderCompleted() {
+        await expect(this.page).toHaveURL(/checkout-complete/);
+        await expect(this.completeHeader).toBeVisible();
     }
 }
 

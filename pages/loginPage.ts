@@ -16,6 +16,11 @@ export class LoginPage extends BasePage {
     async goto() {
         await this.page.goto('https://www.saucedemo.com/');
     }
+
+    async verifyPageLoaded() {
+        await this.waitForUrl(/saucedemo\.com/);
+        await this.waitForVisible(this.usernameInput);
+    }
     
     async login(username: string, password: string) {
         await this.fill(this.usernameInput, username);

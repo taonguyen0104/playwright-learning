@@ -1,16 +1,23 @@
 import { Page, Locator, expect } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
-export class ProductPage {
+export class InventoryPage extends BasePage {
 
-    private readonly page: Page;
     private readonly cartBadge: Locator;
     private readonly shoppingCartLink: Locator;
+    private readonly pageTitle: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
 
         this.cartBadge = page.locator('[data-test="shopping-cart-badge"]');
         this.shoppingCartLink = page.locator('[data-test="shopping-cart-link"]');
+        this.pageTitle = page.locator('[data-test="title"]');
+    }
+
+    async verifyPageLoaded() {
+        await expect(this.page).toHaveURL(/inventory/);
+        await expect(this.pageTitle).toHaveText('Products');
     }
 
     private getInventoryItem(productName: string): Locator {
@@ -33,8 +40,8 @@ export class ProductPage {
         await addBtn.click();
     }
 
-    async verifyCartBadge(count: string) {
-        await expect(this.cartBadge).toHaveText(count);
+    async verifyCartBadge(count: string | number) {
+        await expect(this.cartBadge).toHaveText(count.toString());
     }
 
     async goToCart() {
