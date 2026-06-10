@@ -2,21 +2,24 @@ import { Page, Locator } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class CheckoutInfoPage extends BasePage {
-    private readonly page: Page;
+
+    private readonly firstNameInput: Locator;
+    private readonly lastNameInput: Locator;
+    private readonly zipInput: Locator;
+    private readonly continueButton: Locator;
 
     constructor(page: Page) {
         super(page);
-        this.page = page;
-    }
-
-    async navigateToCheckout() {
-        await this.page.getByRole('button', { name: 'Checkout' }).click();
+        this.firstNameInput = page.getByRole('textbox', { name: 'First Name' });
+        this.lastNameInput = page.getByRole('textbox', { name: 'Last Name' });
+        this.zipInput = page.getByRole('textbox', { name: 'Zip/Postal Code' });
+        this.continueButton = page.getByRole('button', { name: 'Continue' });
     }
 
     async fillCheckoutInformation(firstName: string, lastName: string, zip: string) {
-        await this.page.getByRole('textbox', { name: 'First Name' }).fill(firstName);
-        await this.page.getByRole('textbox', { name: 'Last Name' }).fill(lastName);
-        await this.page.getByRole('textbox', { name: 'Zip/Postal Code' }).fill(zip);
-        await this.page.getByRole('button', { name: 'Continue' }).click();
+        await this.fill(this.firstNameInput, firstName);
+        await this.fill(this.lastNameInput, lastName);
+        await this.fill(this.zipInput, zip);
+        await this.click(this.continueButton);
     }
 }

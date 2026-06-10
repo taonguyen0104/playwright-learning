@@ -1,13 +1,13 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { Product } from "../models/Product";
+import { BasePage } from "./BasePage";
 
-export class OverviewPage {
-    private readonly page: Page;
+export class OverviewPage extends BasePage {
     private readonly ProductItems: Locator;
     private readonly finishButton: Locator;  
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
         this.ProductItems = page.locator('[data-test="inventory-item"]');
         this.finishButton = page.getByRole('button', { name: 'Finish' });
     }

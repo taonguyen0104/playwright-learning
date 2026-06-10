@@ -33,10 +33,11 @@ test('Verify that the cart information remains consistent from the Cart page to 
     await test.step('Collect product data from cart page', async () => {
         cartData = await cartPage.getCartItems();
         expect(cartData.length).toBeGreaterThan(0);
+        await cartPage.proceedToCheckout();
     });
 
-    await test.step('Proceed to checkout', async () => {
-        await checkoutInfoPage.navigateToCheckout();
+    await test.step('Fill checkout information', async () => {
+        await expect(page).toHaveURL(/checkout-step-one/);
         await checkoutInfoPage.fillCheckoutInformation('John', 'Doe', '12345');
         await expect(page).toHaveURL(/checkout-step-two/);
     });
