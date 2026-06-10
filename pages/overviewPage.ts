@@ -1,10 +1,5 @@
 import { Page, Locator, expect } from "@playwright/test";
-
-type ProductItem = {
-  name: string | null;
-  price: string | null;
-  quantity: string | null;
-};
+import { Product } from "../models/Product";
 
 export class OverviewPage {
     private readonly page: Page;
@@ -21,9 +16,9 @@ export class OverviewPage {
         return await this.ProductItems.count();
     }
 
-    async getOverviewItems(): Promise<ProductItem[]> {
+    async getOverviewItems(): Promise<Product[]> {
         const count = await this.ProductItems.count();
-        const itemsData: { name: string | null; price: string | null; quantity: string | null }[] = [];
+        const itemsData: Product[] = [];
 
         for (let i = 0; i < count; i++) {
             const item = this.ProductItems.nth(i);

@@ -1,10 +1,5 @@
 import { Page, Locator } from "@playwright/test";
-
-export type CartItem = {
-  name: string | null;
-  price: string | null;
-  quantity: string | null;
-};
+import { Product } from "../models/Product";
 
 export class CartPage {
     private readonly page: Page;
@@ -19,9 +14,9 @@ export class CartPage {
         return await this.cartItems.count();
     }
 
-    async getCartItems(): Promise<CartItem[]> {
+    async getCartItems(): Promise<Product[]> {
         const count = await this.cartItems.count();
-        const itemsData: CartItem[] = [];
+        const itemsData: Product[] = [];
 
         for (let i = 0; i < count; i++) {
             const item = this.cartItems.nth(i);
