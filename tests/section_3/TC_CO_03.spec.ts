@@ -54,7 +54,7 @@ test('Verify that the cart information remains consistent from the Cart page to 
 
         await expect(page).toHaveURL(/checkout-complete/);
         await expect(page.getByRole('heading', { name: 'Thank you for your order!' })).toBeVisible();
-  });
+    });
 
 });
 
