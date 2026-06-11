@@ -25,10 +25,6 @@ export class CartPage extends BasePage{
         await expect(this.pageTitle).toHaveText('Your Cart');
     }
 
-    getCartItemsCount(): Promise<number> {
-        return this.cartItems.count();
-    }
-
     async getCartItems(): Promise<Product[]> {
         const count = await this.cartItems.count();
         const itemsData: Product[] = [];

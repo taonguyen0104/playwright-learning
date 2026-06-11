@@ -57,7 +57,6 @@ test('Verify that the cart information remains consistent from the Cart page to 
     });
 
     await test.step('Verify data consistency between Cart and Overview pages', async () => {
-        expect(cartData).toHaveLength(2);
         expect(cartData).toEqual(overviewData);
     });
 

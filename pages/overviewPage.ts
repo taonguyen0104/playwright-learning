@@ -21,10 +21,6 @@ export class OverviewPage extends BasePage {
         await expect(this.pageTitle).toHaveText('Checkout: Overview');
     }
 
-    async getProductItemsCount(): Promise<number> {
-        return await this.ProductItems.count();
-    }
-
     async getOverviewItems(): Promise<Product[]> {
         const count = await this.ProductItems.count();
         const itemsData: Product[] = [];

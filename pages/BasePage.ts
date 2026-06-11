@@ -10,9 +10,9 @@ export class BasePage {
 
     // navigation
 
-    async navigateTo(url: string) {
-        await this.page.goto(url, { waitUntil: 'networkidle', timeout: this.defaultTimeout });
-    }
+    // async navigateTo(url: string) {
+    //     await this.page.goto(url, { waitUntil: 'networkidle', timeout: this.defaultTimeout });
+    // }
 
     async waitForUrl(expectedUrl: string | RegExp) {
         await this.page.waitForURL(expectedUrl, { timeout: this.defaultTimeout });
@@ -34,9 +34,9 @@ export class BasePage {
         await locator.fill(value);
     }
 
-    async waitForElement(locator: Locator, state: 'visible' | 'hidden' | 'attached' | 'detached' = 'visible') {
-        await locator.waitFor({ state, timeout: this.defaultTimeout });
-    }
+    // async waitForElement(locator: Locator, state: 'visible' | 'hidden' | 'attached' | 'detached' = 'visible') {
+    //     await locator.waitFor({ state, timeout: this.defaultTimeout });
+    // }
 
     // assertions
     async verifyPageLoaded(expectedUrl: string | RegExp, pageTitle?: string) {
